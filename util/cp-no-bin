@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# this script location: .../gitea/util/cp-no-bin
+# gitea file location: .../gitea/
+
+# this copies to $HOME/tools/gitea/gitea
+# rsync -av --progress ../gitea $HOME/tools/gitea --exclude bin
+
+# this copies to $HOME/tools/gitea
+rsync -av --progress ../../gitea $HOME/tools/ --exclude bin 

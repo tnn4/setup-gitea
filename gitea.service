@@ -1,0 +1,25 @@
+# Gitea service
+# copy gitea.service to /etc/systemd/system/
+
+# $ sudo systemctl enable gitea
+[Unit]
+Description="Gitea (Git with a cup of tea)"
+After=syslog.target
+After=network.target
+
+# Add the database service dependencies
+# Wants=postgres.service
+# After=postgres.service
+
+[Service]
+RestartSec=2s
+Type=simple
+User=git
+Group=git
+WorkingDirectory=/home/t/gitea/ # change this
+ExecStart=/home/t/tools/gitea/bin/gitea web --config /home/t/tools/gitea/cfg/app.ini # change this
+Restart=always
+Environment=USER=git HOME=/home/git
+
+[Install]
+WantedBy=multi-user.target
