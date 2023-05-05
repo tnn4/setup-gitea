@@ -1,5 +1,7 @@
 # Gitea setup guide
 
+This setup assumes you're using a native linux install.
+
 platform: Ubuntu 22.04
 
 requires:
