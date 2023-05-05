@@ -6,5 +6,26 @@
 # this copies to $HOME/tools/gitea/gitea
 # rsync -av --progress ../gitea $HOME/tools/gitea --exclude bin
 
-# this copies to $HOME/tools/gitea
-rsync -av --progress ../../gitea $HOME/tools/ --exclude bin 
+destination_dir=$HOME/tools
+
+# this copies to $destination_dir
+run-here() {
+    gitea_dir="../../gitea"
+    if [[ $# -eq 0 ]]; then
+        rsync -av --progress ${gitea_dir} ${destination_dir} --exclude bin --exclude .git
+    elif [[ -d $1 ]]; then
+        destination_dir=$1
+        rsync -av --progress ${gitea_dir} ${destination_dir} --exclude bin --exclude .git
+    fi 
+}
+
+# this is run if called from cp.py
+run-from-project-root() {
+    gitea_dir="../gitea"
+    if [[ $# -eq 0 ]]; then
+        rsync -av --progress ../gitea ${destination_dir} --exclude bin --exclude .git
+    elif [[ -d $1 ]]; then
+        destination_dir=$1
+        rsync -av --progress ${gitea_dir} ${destination_dir} --exclude bin --exclude .git
+    fi
+}

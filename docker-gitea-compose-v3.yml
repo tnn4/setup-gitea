@@ -1,5 +1,10 @@
 # Start the app using docker-compose pull && docker-compose up to make sure you have the latest image
 
+# can docker compose do variable expansion
+# see: https://docs.docker.com/compose/environment-variables/set-environment-variables/
+# yes, you need to put a `.env` file next to the `docker-compose.yml`
+# run `docker compose config` to verify
+
 # Gitea Postgresql Container Group
 
 # to use a specific compose file run: docker-compose -f <your-compose.yml> up
@@ -32,7 +37,7 @@ services:
     networks:
       - gitea
     volumes:
-      - ./gitea:/data
+      - ./docker/gitea-data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
@@ -58,15 +63,16 @@ services:
         - gitea
       # If on a non-Linux OS, make sure you share the drive used here. Go to Docker's settings -> Shared Drives
       volumes:
+      # switch to named volumes if you're getting permission errors
        # Persist the data between container invocations
-        - ./pg-gitea-data:/var/lib/postgresql/data
+        - ./docker/gitea-pg-data:/var/lib/postgresql/data
         #- postgresVolume:/var/lib/postgresql/data
-        #- ./logs:/logs
+        - ./docker/gitea-pg-logs:/logs
         #- ./postgres.conf
 
 
 
 # Creates a named volume to persist our data. When on a non-Linux OS, the volume's data will be in the Docker VM
 # (e.g., MobyLinuxVM) in /var/lib/docker/volumes/
-volumes:
-  postgresVolume:
+# volumes:
+  # postgresVolume:

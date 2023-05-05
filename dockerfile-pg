@@ -1,0 +1,8 @@
+# FROM alpine #, or your favorite tiny image
+# ADD src/files /var/www/html/files
+# VOLUME /var/www/html/files
+
+FROM postgres:15.2-bullseye
+ADD docker/gitea-pg-data/ /var/lib/postgresql/data
+ADD docker/gitea-pg-logs /logs
+VOLUME /gitea-pg/

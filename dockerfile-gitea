@@ -1,0 +1,3 @@
+FROM postgres:gitea:1.19.0
+ADD docker/gitea-data/ /data
+VOLUME /gitea-data/
