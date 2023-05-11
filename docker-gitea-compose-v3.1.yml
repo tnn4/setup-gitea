@@ -43,7 +43,7 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
-      - "6666:6666"
+      - "6666:3000"
       - "2221:22"
     depends_on:
       - db
