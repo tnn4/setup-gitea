@@ -27,11 +27,15 @@ pg                             gitea           345346c827b8   26 seconds ago   3
 ```
 
 
+
 Start docker services
 - `$(project-root) python util/docker-compose.py up  -l`
 
 Stop docker services
 - `$ python util/docker-compose.py down`
+
+If there are no errors, 
+Login to `http://localhost:3000`
 
 
 ## Directory structure
