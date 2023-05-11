@@ -16,8 +16,22 @@ Install files to a directory, default is `$HOME/tools/gitea`
 - `$(project-root) ./install.sh [path/to/install/]` or
 - `$(project-root) python install.py [path/to/install/`]
 
+Create patched docker image:
+- `./build-docker.sh`
+
+Verify image was created: `docker images`
+```
+REPOSITORY                     TAG             IMAGE ID       CREATED          SIZE
+pg                             gitea           345346c827b8   26 seconds ago   379MB
+
+```
+
+
 Start docker services
-- `$(project-root) python util/docker-compose.py < up | down >`
+- `$(project-root) python util/docker-compose.py up  -l`
+
+Stop docker services
+- `$ python util/docker-compose.py down`
 
 
 ## Directory structure
@@ -88,6 +102,6 @@ see: https://docs.docker.com/desktop/settings/linux/#file-sharing
 
 Logging error
 - Use `./docker-build.sh` to build the new image with log directory `pg:gitea`
-- Run `python util/docker-compose up -t`
+- Run `python util/docker-compose up -l`
 
 ---
