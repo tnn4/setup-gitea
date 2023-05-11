@@ -37,23 +37,19 @@ requires:
 
 ---
 
-## Setup
+## Install
+
 
 Install files to a directory or use as is
 - default installation path :  `$HOME/service/gitea` 
+
+The install copies the current directory to target directory
 
 |method|command|description
 |---|---|---|
 |bash| `$ ./install.sh [/path/to/install/]`| install to `/path/to/install`|
 |python| `$ python install.py [/path/to/install/]`| installs to `/path/to/install/`
 
-
-## Download gitea
-download: [here](https://docs.gitea.io/en-us/installation/install-from-binary/)
-
-put the binary into the `bin` folder, the default `gitea.service` file uses that to run
-
----
 
 ## Quick Start with Docker Compose
 
@@ -87,8 +83,15 @@ Starts Postgres on `http://localhost:5432`, and Gitea on `http://localhost:7777`
 
 ## Set up gitea service manually
 
-If not using docker, 
-look [here](./setup-gitea-service.md)
+### Download gitea
+
+Do this if you're not using docker.
+
+download: [here](https://docs.gitea.io/en-us/installation/install-from-binary/)
+
+Put the binary for your platform into the `bin` folder, the default `gitea.service` file uses that to run
+
+Go [here](./setup-gitea-service.md)
 
 [original_src](https://docs.gitea.io/en-us/installation/install-from-binary/) for more details
 
