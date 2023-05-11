@@ -3,10 +3,10 @@
 # this script location: .../gitea/util/cp-no-bin
 # gitea file location: .../gitea/
 
-# this copies to $HOME/tools/gitea/gitea
-# rsync -av --progress ../gitea $HOME/tools/gitea --exclude bin
+# this copies to $HOME/service/gitea/gitea
+# rsync -av --progress ../gitea $HOME/service/gitea --exclude bin
 
-destination_dir=$HOME/tools
+destination_dir=$HOME/service
 
 # this copies to $destination_dir
 run-here() {

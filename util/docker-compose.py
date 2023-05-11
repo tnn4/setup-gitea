@@ -1,8 +1,9 @@
-import sys
+import sys, os
 import subprocess
 
 docker_compose_file_test= "./docker-gitea-compose-test.yml"
 docker_compose_file="./docker-gitea-compose.yml"
+me=os.path.basename(__file__)
 UP="up"
 DOWN="down"
 
@@ -12,11 +13,11 @@ if __name__ == "__main__":
         print(sys.argv[1])
         arg=sys.argv[1]
         if arg != "up" or arg != "down":
-            print("[ERROR] requires argument: < up|down >")
+            print("[{_me}:ERROR] requires argument: < up|down >".format(_me=me))
         #endif
     else:
-        print("[ERROR] requires 1 or 2 argument: < up [-t] | down >")
-        print(" -l option will run image with log file permissions added")
+        print("[{_me}:ERROR] requires 1 or 2 argument: < up [-t] |down >".format(_me=me))
+        print(" -t runs docker-gitea-compose-test.yml")
     #endif
 
     use_test=False;

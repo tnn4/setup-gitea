@@ -1,6 +1,6 @@
 #!/bin/bash
 
-default_location="$HOME/tools/gitea"
+default_location="$HOME/service/gitea"
 
 if [[ $# -eq 0 ]]; then
     echo "installing to default location: ${default_location}"
