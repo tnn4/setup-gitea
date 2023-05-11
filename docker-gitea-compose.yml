@@ -50,7 +50,7 @@ services:
   db:
       # https://hub.docker.com/_/postgres/tags
       # Use our custom local image that we built
-      image: pg:gitea
+      image: ${patched_pg_image}
       restart: always
       ports:
         - 5432:5432

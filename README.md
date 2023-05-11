@@ -39,6 +39,7 @@ requires:
 
 ## Install
 
+Install flow: `./service.sh` -> `docker build` -> `util/docker-compose.py` -> `docker compose up`
 
 Install files to a directory or use as is
 - default installation path :  `$HOME/service/gitea` 

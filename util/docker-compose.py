@@ -7,19 +7,19 @@ me=os.path.basename(__file__)
 UP="up"
 DOWN="down"
 
-def start_with(_arg):
+def start_with(_arg, _use_test):
     
     match _arg:
         case "up":
-            print("starting docker services required for gitea")
-            if use_test==True:
+            print( me +"starting docker services required for gitea")
+            if _use_test==True:
                 subprocess.run(["docker","compose", "-f", docker_compose_file_test, UP])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, UP])
             #fi
         case "down":
-            print("stopping docker services required for gitea")
-            if use_test==False:
+            print( me + "stopping docker services required for gitea")
+            if _use_test==False:
                 subprocess.run(["docker","compose", "-f", docker_compose_file_test, DOWN ])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, DOWN ])
@@ -49,5 +49,5 @@ if __name__ == "__main__":
     #fi
 
     arg=sys.argv[1]
-    start_with(arg)
+    start_with(arg, use_test)
 #endmain
