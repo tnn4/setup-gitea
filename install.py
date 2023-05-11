@@ -4,8 +4,10 @@ import subprocess
 # docker_compose_file="./docker-gitea-compose-v3.yml"
 
 if __name__ == "__main__":
-    # subprocess.run(["docker","compose", "-f", docker_compose_file, "up"])
+    
     # $ source util/cp-no-bin; run-from-project-root
+    # python's subprocess can't run `source` so we use a workaround
+    # run bash with the raw string, extraordinarily hacky but linux lets us do these sorts of things
     cmd_str="bash -c \"source util/cp-no-bin; run-from-project-root\""
     # subprocess.run(cmd_str, shell=True)
     #end-match

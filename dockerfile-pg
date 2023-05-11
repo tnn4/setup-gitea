@@ -2,7 +2,11 @@
 # ADD src/files /var/www/html/files
 # VOLUME /var/www/html/files
 
+
+# ADD docker/gitea-pg-data/ /var/lib/postgresql/data
+# ADD docker/gitea-pg-logs /logs
+# VOLUME /gitea-pg/
+
 FROM postgres:15.2-bullseye
-ADD docker/gitea-pg-data/ /var/lib/postgresql/data
-ADD docker/gitea-pg-logs /logs
-VOLUME /gitea-pg/
+RUN mkdir /logs
+RUN chown postgres:postgres /logs

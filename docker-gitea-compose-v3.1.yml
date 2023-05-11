@@ -1,0 +1,97 @@
+# Start the app using docker-compose pull && docker-compose up to make sure you have the latest image
+
+# can docker compose do variable expansion
+# see: https://docs.docker.com/compose/environment-variables/set-environment-variables/
+# yes, you need to put a `.env` file next to the `docker-compose.yml`
+# run `docker compose config` to verify
+
+# Gitea Postgresql Container Group
+
+# to use a specific compose file run: docker-compose -f <your-compose.yml> up
+# to bring the container group down: docker-compose -f <your-compose.yml> up
+
+# Once setup is donw, gitea should be available at http://server-ip:3000 to finish setup `db` must be used as hostname if you're using this setup
+
+version: '3'
+
+networks:
+  gitea:
+    external: false
+    #driver: bridge
+
+
+services:
+
+    
+  gitea_server:
+  # change this to gitea
+    image: gitea/gitea:1.19.0
+    container_name: docker-gitea-1
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__databse__DB_TYPE=postgres
+      - GITEA__database__HOST=db:5432
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=postgres
+      - GITEA--database__PASSWD=postgres
+    restart: always
+    networks:
+      - gitea
+    volumes:
+      - gitea-data:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "6666:6666"
+      - "2221:22"
+    depends_on:
+      - db
+  db:
+      # https://hub.docker.com/_/postgres/tags
+      # Use our custom local image that we built
+      image: pg:gitea
+      restart: always
+      ports:
+        - 5432:5432
+      # Make Postgres log to a file.
+      # More on logging with Postgres: https://www.postgresql.org/docs/current/static/runtime-config-logging.html
+      command: postgres -c logging_collector=on -c log_destination=stderr -c log_directory=/logs
+      environment:
+        # Provide the password via an environment variable. If the variable is unset or empty, use a default password
+        # Explanation of this shell feature: https://unix.stackexchange.com/questions/122845/using-a-b-for-variable-assignment-in-scripts/122848#122848
+        # - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-4WXUms893U6j4GE&Hvk3S*hqcqebFgo!vZi}
+        - POSTGRES_DB=gitea
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+        
+      networks:
+        - gitea
+      # If on a non-Linux OS, make sure you share the drive used here. Go to Docker's settings -> Shared Drives
+      volumes:
+      # https://stackoverflow.com/questions/55366386/docker-volume-type-bind-vs-volume
+      # https://docs.docker.com/storage/volumes/
+      # https://docs.docker.com/compose/compose-file/07-volumes/
+      # switch to named volumes if you're getting permission errors
+       # Persist the data between container invocations
+        #- ./docker/gitea-pg-data:/var/lib/postgresql/data
+        - gitea-db-data:/var/lib/mysql/data
+        # log file solution
+        - gitea-db-log-data:/logs
+        #- postgresVolume:/var/lib/postgresql/data
+        #- ./docker/gitea-pg-logs:/logs
+        #- ./postgres.conf
+  
+# compose file needs top level volumes if you use named volumes
+# https://docs.docker.com/compose/compose-file/07-volumes/
+# see: https://stackoverflow.com/questions/69867166/undefined-volume-with-docker-compose
+# https://stackoverflow.com/questions/35679995/how-to-use-a-postgresql-container-with-existing-data
+volumes:
+  gitea-data:
+  gitea-db-data:
+  gitea-db-log-data:
+
+# Creates a named volume to persist our data. When on a non-Linux OS, the volume's data will be in the Docker VM
+# (e.g., MobyLinuxVM) in /var/lib/docker/volumes/
+# volumes:
+  # postgresVolume:

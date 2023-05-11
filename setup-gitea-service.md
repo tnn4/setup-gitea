@@ -1,11 +1,12 @@
 # Setup gitea service
 
+requires:
+- systemd
+
 set up database: https://docs.gitea.io/en-us/installation/database-prep/#postgresql-1
 
 with docker
 
-Run bash inside docker container
-- `docker exec --interactive --tty <your-postgres-container> bash`
 
 Open database server, login as super user
 - `$ su -c "psql" - postgres`

@@ -1,6 +1,6 @@
 # Gitea setup guide
 
-This setup assumes you're using a native linux install.
+This setup assumes you're using a native linux install. If you're using Windows you could probably use [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 platform: Ubuntu 22.04
 
@@ -13,7 +13,8 @@ requires:
 ## Quick start
 
 Install files to a directory, default is `$HOME/tools/gitea` 
-- `$(project-root) ./install.sh [path/to/install/]`
+- `$(project-root) ./install.sh [path/to/install/]` or
+- `$(project-root) python install.py [path/to/install/`]
 
 Start docker services
 - `$(project-root) python util/docker-compose.py < up | down >`
@@ -59,7 +60,17 @@ this repo:
 - `$ docker compose -f docker-gitea-compose-v3.yml up` 
 
 You can also use the convenience scripts:
-- `$ python util/docker-compose.py`
+- `$ python util/docker-compose.py <up | down>`
+
+
+
+## Useful commands in docker
+
+- List containers
+- `docker ps`
+
+- Run bash inside docker container
+- `docker exec --interactive --tty <your-postgres-container> bash`
 
 ### Volume mappings
 
@@ -74,5 +85,9 @@ When running docker compose and
 If you get a error: mount denied, try using docker desktop to add to the folders to shared paths:
 see: https://docs.docker.com/desktop/settings/linux/#file-sharing
 ![error-mount-denied](content/error-mount-denied-00.png)
+
+Logging error
+- Use `./docker-build.sh` to build the new image with log directory `pg:gitea`
+- Run `python util/docker-compose up -t`
 
 ---
