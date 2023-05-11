@@ -19,10 +19,10 @@ if __name__ == "__main__":
         print(" -l option will run image with log file permissions added")
     #endif
 
-    test=False;
+    log_update=False;
     if len(sys.argv) == 3:
-        if sys.argv[2] == "-l":
-            test=True
+        if sys.argv[1] == UP and sys.argv[2] == "-l":
+            log_update=True
         #fi
     #fi
 
@@ -30,14 +30,14 @@ if __name__ == "__main__":
     match arg:
         case "up":
             print("starting docker services required for gitea")
-            if test==True:
+            if log_update==True:
                 subprocess.run(["docker","compose", "-f", docker_compose_file2, UP])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, UP])
             #fi
         case "down":
             print("stopping docker services required for gitea")
-            if test==False:
+            if log_update==False:
                 subprocess.run(["docker","compose", "-f", docker_compose_file2, DOWN ])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, DOWN ])
