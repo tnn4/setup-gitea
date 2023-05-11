@@ -1,8 +1,8 @@
 import sys
 import subprocess
 
-docker_compose_file= "./docker-gitea-compose-v3.0.yml"
-docker_compose_file2="./docker-gitea-compose-v3.1.yml"
+docker_compose_file_test= "./docker-gitea-compose-test.yml"
+docker_compose_file="./docker-gitea-compose.yml"
 UP="up"
 DOWN="down"
 
@@ -15,14 +15,14 @@ if __name__ == "__main__":
             print("[ERROR] requires argument: < up|down >")
         #endif
     else:
-        print("[ERROR] requires 1 or 2 argument: < up|down > [-l]")
+        print("[ERROR] requires 1 or 2 argument: < up [-t] | down >")
         print(" -l option will run image with log file permissions added")
     #endif
 
-    log_update=False;
+    use_test=False;
     if len(sys.argv) == 3:
-        if sys.argv[1] == UP and sys.argv[2] == "-l":
-            log_update=True
+        if sys.argv[1] == UP and sys.argv[2] == "-t":
+            use_test=True
         #fi
     #fi
 
@@ -30,15 +30,15 @@ if __name__ == "__main__":
     match arg:
         case "up":
             print("starting docker services required for gitea")
-            if log_update==True:
-                subprocess.run(["docker","compose", "-f", docker_compose_file2, UP])
+            if use_test==True:
+                subprocess.run(["docker","compose", "-f", docker_compose_file_test, UP])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, UP])
             #fi
         case "down":
             print("stopping docker services required for gitea")
-            if log_update==False:
-                subprocess.run(["docker","compose", "-f", docker_compose_file2, DOWN ])
+            if use_test==False:
+                subprocess.run(["docker","compose", "-f", docker_compose_file_test, DOWN ])
             else:
                 subprocess.run(["docker","compose", "-f", docker_compose_file, DOWN ])
             #fi

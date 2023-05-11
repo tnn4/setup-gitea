@@ -1,20 +1,51 @@
 # Gitea setup guide
 
+![python](https://img.shields.io/badge/language-python-blue)
+![shell](https://img.shields.io/badge/language-bash-blue)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Gitea](https://img.shields.io/badge/Gitea-34495E?style=for-the-badge&logo=gitea&logoColor=5D9425)
+
 This setup assumes you're using a native linux install. If you're using Windows you could probably use [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install).
 
 platform: Ubuntu 22.04
 
 requires:
-- bash
+- bash>=5
 - python3
 - docker version>=23.0.0
 - docker-desktop version>=4.18.0
 
+---
+
+## Table of Contents
+- [directory structure](#directory-structure)
+- [setup with docker](#setup)
+- [manual install](#set-up-gitea-service-from-binary)
+- [docker command reference](#docker-commands-reference)
+
+
+---
+
+## Directory structure and important files
+- `bin/` - put your gitea binary here
+- `custom/` - files for customizing gitea, https://docs.gitea.io/en-us/administration/customizing-gitea/
+- [DEPRECATED] `docker/` - bind volumes for docker, https://docs.gitea.io/en-us/installation/install-with-docker/
+- `util/` - convenience scripts
+- `.git` - files used with git
+- `.env` - environmental variables for docker compose
+- `start.sh` - script to startup docker compose services
+
+---
+
 ## Setup
 
-Install files to a directory, default is `$HOME/tools/gitea` 
-- `$(project-root) ./install.sh [path/to/install/]` or
-- `$(project-root) python install.py [path/to/install/`]
+Install files to a directory or use as is
+- default installation path :  `$HOME/service/gitea` 
+
+|method|command|description
+|---|---|---|
+|bash| `$ ./install.sh [/path/to/install/]`| install to `/path/to/install`|
+|python| `$ python install.py [/path/to/install/]`| installs to `/path/to/install/`
 
 
 ## Download gitea
@@ -22,12 +53,9 @@ download: [here](https://docs.gitea.io/en-us/installation/install-from-binary/)
 
 put the binary into the `bin` folder, the default `gitea.service` file uses that to run
 
-## Set up gitea service from binary
+---
 
-If not using docker, 
-look [here](./setup-gitea-service.md)
-
-[original_src](https://docs.gitea.io/en-us/installation/install-from-binary/) for more details
+## Quick Start with Docker Compose
 
 Create patched docker image:
 - `./build-docker.sh`
@@ -39,30 +67,35 @@ pg                             gitea           345346c827b8   26 seconds ago   3
 
 ```
 
-Start docker services
-- `$(project-root) python util/docker-compose.py up  -l`
+Change environment variables to desired ports in `.env`
 
-Stop docker services
-- `$ python util/docker-compose.py down`
+.env defaults
+```
+gitea_port=7777
+gitea_ssh_port=2221
+```
 
-If there are no errors, 
-Login to `http://localhost:3000`
-
-
+Run:
+```
+$ ./service.sh <up|down>
+```
+Starts Postgres on `http://localhost:5432`, and Gitea on `http://localhost:7777` by default
 
 ![gitea setup screen](content/gitea-setup-screen-00.png)
 
-## Directory structure
-- `bin` - put your binaries here
-- `custom` - files for customizing gitea, https://docs.gitea.io/en-us/administration/customizing-gitea/
-- `docker` - volumes for docker, https://docs.gitea.io/en-us/installation/install-with-docker/
-- `util` - convenience scripts
-- `.git` - files used with git
+---
+
+## Set up gitea service manually
+
+If not using docker, 
+look [here](./setup-gitea-service.md)
+
+[original_src](https://docs.gitea.io/en-us/installation/install-from-binary/) for more details
 
 
 ---
 
-## Use with docker compose
+## Docker Commands Reference
 [see](https://docs.gitea.io/en-us/installation/install-with-docker/)
 
 ### Start services with docker compose
