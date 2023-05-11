@@ -49,6 +49,9 @@ If there are no errors,
 Login to `http://localhost:3000`
 
 
+
+![gitea setup screen](content/gitea-setup-screen-00.png)
+
 ## Directory structure
 - `bin` - put your binaries here
 - `custom` - files for customizing gitea, https://docs.gitea.io/en-us/administration/customizing-gitea/
