@@ -10,11 +10,24 @@ requires:
 - docker version>=23.0.0
 - docker-desktop version>=4.18.0
 
-## Quick start
+## Setup
 
 Install files to a directory, default is `$HOME/tools/gitea` 
 - `$(project-root) ./install.sh [path/to/install/]` or
 - `$(project-root) python install.py [path/to/install/`]
+
+
+## Download gitea
+download: [here](https://docs.gitea.io/en-us/installation/install-from-binary/)
+
+put the binary into the `bin` folder, the default `gitea.service` file uses that to run
+
+## Set up gitea service from binary
+
+If not using docker, 
+look [here](./setup-gitea-service.md)
+
+[original_src](https://docs.gitea.io/en-us/installation/install-from-binary/) for more details
 
 Create patched docker image:
 - `./build-docker.sh`
@@ -25,8 +38,6 @@ REPOSITORY                     TAG             IMAGE ID       CREATED          S
 pg                             gitea           345346c827b8   26 seconds ago   379MB
 
 ```
-
-
 
 Start docker services
 - `$(project-root) python util/docker-compose.py up  -l`
@@ -45,21 +56,6 @@ Login to `http://localhost:3000`
 - `util` - convenience scripts
 - `.git` - files used with git
 
-
-
-## Setup
-
-## Download gitea
-download: [here](https://docs.gitea.io/en-us/installation/install-from-binary/)
-
-put the binary into the `bin` folder, the default `gitea.service` file uses that to run
-
-## Set up gitea service from binary
-
-If not using docker, 
-look [here](./setup-gitea-service.md)
-
-[original_src](https://docs.gitea.io/en-us/installation/install-from-binary/) for more details
 
 ---
 
@@ -81,6 +77,7 @@ You can also use the convenience scripts:
 - `$ python util/docker-compose.py <up | down>`
 
 
+---
 
 ## Useful commands in docker
 
@@ -90,12 +87,7 @@ You can also use the convenience scripts:
 - Run bash inside docker container
 - `docker exec --interactive --tty <your-postgres-container> bash`
 
-### Volume mappings
 
-| host | service | container |
-| --- | --- | --- |
-|`docker/gitea-data`| gitea | `/data` |
-|`docker/gitea-pg-data`| db | `/var/lib/postgres/data/`|
 
 ## Troubleshooting
 
@@ -109,3 +101,12 @@ Logging error
 - Run `python util/docker-compose up -l`
 
 ---
+
+
+## DEPRECATED
+### Volume mappings (deprecated), using named volumes now
+
+| host | service | container |
+| --- | --- | --- |
+|`docker/gitea-data`| gitea | `/data` |
+|`docker/gitea-pg-data`| db | `/var/lib/postgres/data/`|
