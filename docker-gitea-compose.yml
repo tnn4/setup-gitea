@@ -75,7 +75,7 @@ services:
       # switch to named volumes if you're getting permission errors
        # Persist the data between container invocations
         #- ./docker/gitea-pg-data:/var/lib/postgresql/data
-        - gitea-db-data:/var/lib/mysql/data
+        - gitea-db-data:/var/lib/postgresql/data
         # log file solution
         - gitea-db-log-data:/logs
         #- postgresVolume:/var/lib/postgresql/data
