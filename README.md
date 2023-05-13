@@ -89,7 +89,7 @@ Check environmental variable gitea uses:
 By default:
 - `GITEA_CUSTOM` -> `/data/gitea`
 
-gitea reads fromm a `app.ini` to customize settings
+gitea reads fromm a `/data/gitea/conf/app.ini` to customize settings
 
 app.ini
 ```ini
@@ -99,8 +99,16 @@ ROOT_URL  = http://localhost:3000
 HTTP_PORT = 3000
 ```
 
-Copy your custom configuration to $GITEA_CUSTOM/app.ini
-`docker cp app.ini docker-gitea-1:/data/gitea/app.ini`
+How to Copy your custom configuration to $GITEA_CUSTOM/app.ini
+- `docker cp app.ini docker-gitea-1:/data/gitea/conf/app.ini`
+
+Change it with docker desktop
+
+![app.ini](content/gitea-docker-app-ini-00.png)
+
+Restart docker container:
+
+
 
 ---
 
