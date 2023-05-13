@@ -80,6 +80,28 @@ Starts Postgres on `http://localhost:5432`, and Gitea on `http://localhost:7777`
 
 ![gitea setup screen](content/gitea-setup-screen-00.png)
 
+Customize Docker-gitea
+
+Check environmental variable gitea uses:
+
+`docker exec container env`
+
+By default:
+- `GITEA_CUSTOM` -> `/data/gitea`
+
+gitea reads fromm a `app.ini` to customize settings
+
+app.ini
+```ini
+[server]
+PROTOCOL  = http
+ROOT_URL  = http://localhost:3000
+HTTP_PORT = 3000
+```
+
+Copy your custom configuration to $GITEA_CUSTOM/app.ini
+`docker cp app.ini docker-gitea-1:/data/gitea/app.ini`
+
 ---
 
 ## Set up gitea service manually
